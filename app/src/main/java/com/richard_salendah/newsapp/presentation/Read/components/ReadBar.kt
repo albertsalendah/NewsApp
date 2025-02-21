@@ -19,6 +19,7 @@ import com.richard_salendah.newsapp.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReadBar(
+    isBookmarked: Boolean,
     onBrowserClick: () -> Unit,
     onShareClick: () -> Unit,
     onBookmarkClick: () -> Unit,
@@ -40,7 +41,10 @@ fun ReadBar(
         }, actions = {
             IconButton(onClick = onBookmarkClick) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_bookmark),
+                    painter = painterResource(
+                        id = if (isBookmarked) R.drawable.bookmark_remove_24
+                        else R.drawable.bookmark_add_24
+                    ),
                     contentDescription = null
                 )
             }
@@ -63,5 +67,10 @@ fun ReadBar(
 @Preview(showBackground = true)
 @Composable
 fun ReadBarPreview() {
-    ReadBar(onBrowserClick = {}, onShareClick = {}, onBookmarkClick = {}, onBackClick = {})
+    ReadBar(
+        isBookmarked = false,
+        onBrowserClick = {},
+        onShareClick = {},
+        onBookmarkClick = {},
+        onBackClick = {})
 }

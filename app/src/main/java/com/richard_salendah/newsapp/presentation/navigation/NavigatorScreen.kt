@@ -1,10 +1,13 @@
 package com.richard_salendah.newsapp.presentation.navigation
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -53,7 +56,7 @@ fun NavigatorScreen() {
     }
 
     val isBottonNavVisible = remember(key1 = backStackEntry) {
-                backStackEntry?.destination?.route == Route.SearchScreen.route ||
+        backStackEntry?.destination?.route == Route.SearchScreen.route ||
                 backStackEntry?.destination?.route == Route.BookMarkScreen.route
     }
 
@@ -78,7 +81,7 @@ fun NavigatorScreen() {
         NavHost(
             navController = navController,
             startDestination = Route.SearchScreen.route,
-            modifier = Modifier.padding(bottom = bottomPadding)
+            modifier = Modifier.padding(bottom = bottomPadding),
         ) {
             composable(route = Route.SearchScreen.route) {
                 val viewModel: SearchViewModel = hiltViewModel()
@@ -99,8 +102,13 @@ fun NavigatorScreen() {
                 }
                 navController.previousBackStackEntry?.savedStateHandle?.get<Article?>("article")
                     ?.let { article ->
+                        LaunchedEffect(article) {
+                            viewModel.checkIfArticleIsBookmarked(article.url)
+                        }
+                        val isBookmarked by viewModel.isBookmarked.collectAsState()
                         ReadScreen(
                             article = article,
+                            isBookmarked = isBookmarked,
                             event = viewModel::onEvent,
                             navigate = { navController.navigateUp() }
                         )
