@@ -1,6 +1,5 @@
 package com.richard_salendah.newsapp.presentation.navigation
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
