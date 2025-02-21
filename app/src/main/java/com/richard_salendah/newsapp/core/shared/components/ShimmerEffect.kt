@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -53,7 +54,14 @@ fun ArticleShimmer(modifier: Modifier = Modifier) {
                 .clip(MaterialTheme.shapes.medium)
                 .shimmerEffect(),
         )
-
+        Spacer(modifier = Modifier.height(MediumPadding1))
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = MediumPadding1)
+                .height(30.dp)
+                .shimmerEffect()
+        )
         Column(
             verticalArrangement = Arrangement.SpaceAround,
             modifier = Modifier
